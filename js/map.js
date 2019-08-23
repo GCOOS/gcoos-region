@@ -41,11 +41,11 @@
   // ================================================================
 
   var gcoosRegion = L.esri.featureLayer({
-    url: 'https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/2?token=F_nVVl-rqf_YoyI42eVf6fmKe9ZAUh1SOhHhkrrD4EozHaCOgcd4ym58vpSTbhammYodSkaSn9ROgUg66Om8DKPJDC0ZqMZ-4iCEtIcp1u5m7Q_reauGRCa6OalMSHR37ptHS4z6ZqpCwYG3j7Rre3yvkcghsMDuXhCgEoO75DPNhdDIZhTtBpyU7U8NoR3_xtyozv9oUGXSADLzX-Zv7njDGh0kgiQtvMGZWDRkzFa7eG2Ff7TTBnezF4nLx_pV',
+    url: 'https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/2',
   }).addTo(map);
 
   var gcoosRegionUS = L.esri.featureLayer({
-    url: 'https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/1?token=F_nVVl-rqf_YoyI42eVf6fmKe9ZAUh1SOhHhkrrD4EozHaCOgcd4ym58vpSTbhammYodSkaSn9ROgUg66Om8DKPJDC0ZqMZ-4iCEtIcp1u5m7Q_reauGRCa6OalMSHR37ptHS4z6ZqpCwYG3j7Rre3yvkcghsMDuXhCgEoO75DPNhdDIZhTtBpyU7U8NoR3_xtyozv9oUGXSADLzX-Zv7njDGh0kgiQtvMGZWDRkzFa7eG2Ff7TTBnezF4nLx_pV',
+    url: 'https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/1',
   }).addTo(map);
 
   var activeHurricaneESRI = L.esri.dynamicMapLayer({
@@ -57,7 +57,7 @@
     className: 'station-div-icon'
   });
   var gcoosAssets = L.esri.featureLayer({
-    url: 'https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/0?token=F_nVVl-rqf_YoyI42eVf6fmKe9ZAUh1SOhHhkrrD4EozHaCOgcd4ym58vpSTbhammYodSkaSn9ROgUg66Om8DKPJDC0ZqMZ-4iCEtIcp1u5m7Q_reauGRCa6OalMSHR37ptHS4z6ZqpCwYG3j7Rre3yvkcghsMDuXhCgEoO75DPNhdDIZhTtBpyU7U8NoR3_xtyozv9oUGXSADLzX-Zv7njDGh0kgiQtvMGZWDRkzFa7eG2Ff7TTBnezF4nLx_pV',
+    url: 'https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/0',
     pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
         icon: stationIcon,
