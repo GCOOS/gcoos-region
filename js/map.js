@@ -50,17 +50,34 @@
   // ================================================================
   // Ancillary Data Layers - Top Corner Layers Group
   // ================================================================
+  var usStateBoundary = L.esri.featureLayer({
+    url: "https://services1.arcgis.com/qr14biwnHA6Vis6l/ArcGIS/rest/services/StateBoundaries/FeatureServer/0",
+    where: "STATE_ABBR='TX' OR STATE_ABBR='LA' OR STATE_ABBR='MS' OR STATE_ABBR='AL' OR STATE_ABBR='FL'",
+    style: function (feature) {
+      return {
+        color: 'green',
+        weight: 2
+      };
+    },
+    opacity: 0.7
+  });
+
   var gcoosRegion = L.esri
     .featureLayer({
-      url:
-        "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/2",
+      url: "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/2",
+      style: function (feature) {
+        return {
+          color: 'blue',
+          weight: 3
+        };
+      },
+      opacity: 0.5
     })
     .addTo(map);
 
   var gcoosRegionUS = L.esri
     .featureLayer({
-      url:
-        "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/1",
+      url: "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/1",
     })
     .addTo(map);
 
@@ -69,8 +86,7 @@
   });
   var gcoosAssets = L.esri
     .featureLayer({
-      url:
-        "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/0",
+      url: "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/0",
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
           icon: stationIcon,
@@ -82,10 +98,10 @@
   gcoosAssets.bindPopup(function (layer) {
     return L.Util.template(
       "<h1>{station}</h1><h2>{organization}</h2>" +
-        "<table>" +
-        "<tr><td>URN: </td><td>{urn}</td></tr>" +
-        "<tr><td>Description: </td><td>{description}</td></tr>" +
-        "</table>",
+      "<table>" +
+      "<tr><td>URN: </td><td>{urn}</td></tr>" +
+      "<tr><td>Description: </td><td>{description}</td></tr>" +
+      "</table>",
       layer.feature.properties
     );
   });
@@ -97,6 +113,7 @@
     "GCOOS Region Assets": gcoosAssets,
     "GCOOS Region (USA)": gcoosRegionUS,
     "GCOOS Region (Gulf)": gcoosRegion,
+    "GCOOS Region States": usStateBoundary,
   };
   var controlLayers = L.control
     .layers(basemapLayers, groupedOverlay, {
