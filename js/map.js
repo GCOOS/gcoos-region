@@ -28,12 +28,11 @@
   // Google Maps API and GoogleMutant
   var googleRoads = L.gridLayer.googleMutant({
     type: "roadmap", // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-  });
+  }).addTo(map);
   var googleHybrid = L.gridLayer
     .googleMutant({
       type: "hybrid",
-    })
-    .addTo(map);
+    });
 
   // ================================================================
   /* grouping basemap layers */
@@ -60,7 +59,7 @@
       };
     },
     opacity: 0.7
-  });
+  }).addTo(map);
 
   var gcoosRegion = L.esri
     .featureLayer({
