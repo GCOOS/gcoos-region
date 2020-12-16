@@ -77,29 +77,39 @@
   var gcoosRegionUS = L.esri
     .featureLayer({
       url: "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/1",
+      style: function (feature) {
+        return {
+          color: 'yellow',
+          weight: 3
+        };
+      },
+      opacity: 0.5
     })
     .addTo(map);
 
+  /* GCOOS Stations */
   var stationIcon = L.divIcon({
     className: "station-div-icon",
   });
-  var gcoosAssets = L.esri
-    .featureLayer({
-      url: "https://services1.arcgis.com/qr14biwnHA6Vis6l/arcgis/rest/services/The_GCOOS_Region/FeatureServer/0",
-      pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {
-          icon: stationIcon,
-          riseOnHover: true,
-        });
-      },
-    })
-    .addTo(map);
+  var gcoosAssets = L.esri.featureLayer({
+    url: "https://gis.gcoos.org/arcgis/rest/services/Stations/The_GCOOS_Region/FeatureServer/0",
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        icon: stationIcon,
+        riseOnHover: true,
+      });
+    },
+    ignoreRenderer: true
+  }).addTo(map);
   gcoosAssets.bindPopup(function (layer) {
+    // console.log(layer);
+    var url = layer.feature.properties.urn.substring(4,)
     return L.Util.template(
-      "<h1>{station}</h1><h2>{organization}</h2>" +
+      "<h3>{station}</h3><h4>{organization}</h4>" +
       "<table>" +
       "<tr><td>URN: </td><td>{urn}</td></tr>" +
       "<tr><td>Description: </td><td>{description}</td></tr>" +
+      "<tr><td>Link: <a href='https://data.gcoos.org/monitoring.php?station=" + url + "' target='_blank'>Open</a></td></tr>" + 
       "</table>",
       layer.feature.properties
     );
@@ -123,32 +133,26 @@
   // Full screen control
   map.addControl(new L.Control.Fullscreen());
 
-  // // Hycom Ocean Current
-  // function addHycom() {
-  //   d3.json("https://geo.gcoos.org/data/hycom/hycom_surface_current.json").then(
-  //     function (data) {
-  //       var velocityLayer = L.velocityLayer({
-  //         displayValues: true,
-  //         displayOptions: {
-  //           velocityType: "water",
-  //           displayPosition: "bottomleft",
-  //           displayEmptyString: "No water data",
-  //         },
-  //         data: data,
-  //         maxVelocity: 2.5,
-  //         velocityScale: 0.1, // arbitrary default 0.005
-  //       }).addTo(map);
+  // Hycom Ocean Current
+  function addHycom() {
+    d3.json("https://geo.gcoos.org/data/hycom/hycom_surface_current.json").then(
+      function (data) {
+        var velocityLayer = L.velocityLayer({
+          displayValues: true,
+          displayOptions: {
+            velocityType: "water",
+            displayPosition: "bottomleft",
+            displayEmptyString: "No water data",
+          },
+          data: data,
+          maxVelocity: 2.5,
+          velocityScale: 0.4, // arbitrary default 0.005
+        }).addTo(map);
 
-  //       controlLayers.addOverlay(velocityLayer, "HYCOM Ocean Current");
-  //     }
-  //   );
-  // }
-  // addHycom();
+        controlLayers.addOverlay(velocityLayer, "HYCOM Ocean Current");
+      }
+    );
+  }
+  addHycom();
 
-  // // Set layers which redraw in a certain period
-  // setInterval(function () {
-  //   onDragEnd();
-  //   controlLayers.removeLayer(velocityLayer);
-  //   addHycom();
-  // }, 360000);
 })();
